@@ -1,0 +1,766 @@
+/* ==========================================================================
+   Job Runner — approved design system tokens (do not re-derive)
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-bg: #F6F7F9;
+  --color-surface: #FFFFFF;
+  --color-surfaceMuted: #F1F3F6;
+  --color-fg: #16181D;
+  --color-fgMuted: #6B7280;
+  --color-border: #E4E7EC;
+  --color-borderStrong: #CBD2DC;
+  --color-accent: #4F46E5;
+  --color-accentHover: #4338CA;
+  --color-accentActive: #3730A3;
+  --color-accentSubtle: #EEF0FE;
+  --color-focusRing: #4F46E5;
+  --color-statusPendingFg: #92400E;
+  --color-statusPendingBg: #FEF3C7;
+  --color-statusRunningFg: #1D4ED8;
+  --color-statusRunningBg: #DBEAFE;
+  --color-statusDoneFg: #047857;
+  --color-statusDoneBg: #D1FAE5;
+  --color-statusFailedFg: #B91C1C;
+  --color-statusFailedBg: #FEE2E2;
+  --color-danger: #B91C1C;
+  --color-dangerBg: #FEF2F2;
+
+  /* Typography */
+  --font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --heading-weight: 600;
+  --body-weight: 400;
+  --line-height-body: 1.5;
+  --line-height-heading: 1.25;
+
+  /* Spacing */
+  --space-0: 4px;
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: var(--body-weight);
+  font-size: 16px;
+  line-height: var(--line-height-body);
+  letter-spacing: 0;
+  color: var(--color-fg);
+  background: var(--color-bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focusRing);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.page {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.page-main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ==========================================================================
+   AppHeader
+   ========================================================================== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 64px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-fg);
+}
+
+/* ==========================================================================
+   PollIndicator
+   ========================================================================== */
+.poll-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.poll-indicator__text {
+  font-size: 12px;
+  color: var(--color-fgMuted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.poll-indicator__ts {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-fgMuted);
+}
+
+.poll-indicator__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.poll-indicator__dot--ok {
+  background: var(--color-statusDoneFg);
+}
+
+.poll-indicator__dot--wait {
+  background: var(--color-statusPendingFg);
+}
+
+.refresh-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--color-fgMuted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 120ms ease-out;
+}
+
+.refresh-btn:hover {
+  background: var(--color-surfaceMuted);
+}
+
+/* ==========================================================================
+   Button
+   ========================================================================== */
+.btn {
+  height: 44px;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 120ms ease-out, transform 120ms ease-out;
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.btn--primary:hover {
+  background: var(--color-accentHover);
+}
+
+.btn--primary:active {
+  background: var(--color-accentActive);
+  transform: translateY(1px);
+}
+
+.btn--primary:disabled,
+.btn--primary.is-loading {
+  background: var(--color-accent);
+  opacity: 0.45;
+  color: #FFFFFF;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
+}
+
+.btn--secondary {
+  background: var(--color-surface);
+  border: 1px solid var(--color-borderStrong);
+  color: var(--color-fg);
+}
+
+.btn--secondary:hover {
+  background: var(--color-surfaceMuted);
+}
+
+.btn--sm {
+  height: 36px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   JobForm
+   ========================================================================== */
+.job-form {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.field__control {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--color-fg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-borderStrong);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  width: 100%;
+}
+
+.field__control::placeholder {
+  color: var(--color-fgMuted);
+}
+
+.field__control:focus-visible {
+  border-color: var(--color-accent);
+  outline: 2px solid var(--color-focusRing);
+  outline-offset: 0;
+}
+
+textarea.field__control {
+  min-height: 120px;
+  resize: vertical;
+  line-height: var(--line-height-body);
+}
+
+select.field__control {
+  height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Error state (only after a failed submit) */
+.field--error .field__control {
+  border: 1px solid var(--color-danger);
+}
+
+.field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-danger);
+}
+
+.field__error-icon {
+  flex: none;
+  margin-top: 2px;
+}
+
+.job-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+}
+
+/* ==========================================================================
+   StatusBadge
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge--pending {
+  color: var(--color-statusPendingFg);
+  background: var(--color-statusPendingBg);
+  border: 1px solid color-mix(in srgb, var(--color-statusPendingFg) 30%, transparent);
+}
+
+.badge--running {
+  color: var(--color-statusRunningFg);
+  background: var(--color-statusRunningBg);
+  border: 1px solid color-mix(in srgb, var(--color-statusRunningFg) 30%, transparent);
+}
+
+.badge--done {
+  color: var(--color-statusDoneFg);
+  background: var(--color-statusDoneBg);
+  border: 1px solid color-mix(in srgb, var(--color-statusDoneFg) 30%, transparent);
+}
+
+.badge--failed {
+  color: var(--color-statusFailedFg);
+  background: var(--color-statusFailedBg);
+  border: 1px solid color-mix(in srgb, var(--color-statusFailedFg) 30%, transparent);
+}
+
+.badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: none;
+  background: currentColor;
+}
+
+.badge--running .badge__dot {
+  animation: badge-pulse 1.2s ease-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge--running .badge__dot {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   JobList & JobCard
+   ========================================================================== */
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.job-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: 16px 20px;
+  box-shadow: 0 1px 2px rgba(22, 24, 29, 0.04);
+}
+
+.job-card--running {
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.job-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.job-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.job-card__id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-fgMuted);
+}
+
+.job-card__type {
+  font-size: 13px;
+  color: var(--color-fgMuted);
+}
+
+.job-card__preview {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--color-fgMuted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.job-card__result {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-fg);
+}
+
+.job-card__error {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-danger);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   ResultBlock
+   ========================================================================== */
+.result-wordcount {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.result-wordcount__num {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-fg);
+  line-height: var(--line-height-heading);
+}
+
+.result-wordcount__unit {
+  font-size: 14px;
+  color: var(--color-fgMuted);
+}
+
+.result-readingtime {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-readingtime__value {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-fg);
+  line-height: var(--line-height-heading);
+}
+
+.result-readingtime__basis {
+  font-size: 13px;
+  color: var(--color-fgMuted);
+}
+
+.result-topwords {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.result-topwords__row {
+  display: grid;
+  grid-template-columns: 24px auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.result-topwords__rank {
+  font-size: 13px;
+  color: var(--color-fgMuted);
+  text-align: right;
+}
+
+.result-topwords__word {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.result-topwords__bar {
+  height: 8px;
+  background: var(--color-accentSubtle);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.result-topwords__bar-fill {
+  height: 100%;
+  min-width: 4px;
+  background: var(--color-accent);
+  border-radius: var(--radius-pill);
+}
+
+.result-topwords__count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-fgMuted);
+  text-align: right;
+}
+
+/* ==========================================================================
+   EmptyState
+   ========================================================================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.empty-state__glyph {
+  margin-bottom: 16px;
+}
+
+.empty-state__heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-fg);
+  margin-bottom: 8px;
+}
+
+.empty-state__body {
+  font-size: 14px;
+  color: var(--color-fgMuted);
+  margin-bottom: 16px;
+}
+
+.empty-state__link {
+  color: var(--color-accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.empty-state__link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   ErrorBanner
+   ========================================================================== */
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--color-dangerBg);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 30%, transparent);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  width: 100%;
+}
+
+.error-banner__icon {
+  flex: none;
+  margin-top: 1px;
+}
+
+.error-banner__content {
+  flex: 1 1 auto;
+  font-size: 14px;
+  color: var(--color-danger);
+}
+
+.error-banner__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex: none;
+}
+
+.error-banner__dismiss {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--color-danger);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-banner__dismiss:hover {
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+}
+
+/* ==========================================================================
+   SkeletonRow
+   ========================================================================== */
+.skeleton-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-bar {
+  height: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surfaceMuted);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-bar::after {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Mockup nav (review harness only — not product UI)
+   ========================================================================== */
+.mock-nav {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  margin-top: 48px;
+}
+
+.mock-nav__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.mock-nav__label {
+  font-size: 12px;
+  color: var(--color-fgMuted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.mock-nav a {
+  font-size: 13px;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.mock-nav a:hover {
+  text-decoration: underline;
+}
+
+.mock-nav a.is-current {
+  color: var(--color-fgMuted);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 640px) {
+  .container,
+  .app-header__inner,
+  .mock-nav__inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .page {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .job-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Runner — Aufträge</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header" data-od-id="app-header">
+    <div class="app-header__inner">
+      <span class="wordmark" data-od-id="wordmark">Job Runner</span>
+      <div class="poll-indicator" data-od-id="poll-indicator">
+        <span class="poll-indicator__text">
+          <span class="poll-indicator__dot poll-indicator__dot--ok" aria-hidden="true"></span>
+          Live · aktualisiert
+        </span>
+        <span class="poll-indicator__ts">2026-10-08 14:02:31 UTC</span>
+        <button class="refresh-btn" type="button" aria-label="Jetzt aktualisieren" title="Jetzt aktualisieren" data-od-id="refresh-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5V5h-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page" data-od-id="page-main">
+    <div class="container">
+      <div class="page-main">
+
+        <form class="job-form" id="job-form" novalidate data-od-id="job-form">
+          <div class="field" id="text-field">
+            <label class="field__label" for="job-text">Text</label>
+            <textarea class="field__control" id="job-text" name="text" placeholder="Text eingeben, der ausgewertet werden soll …"></textarea>
+            <p class="field__error" id="job-text-error" hidden>
+              <svg class="field__error-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 1.8 14.2 13H1.8L8 1.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M8 6.2v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="8" cy="11.4" r="0.75" fill="currentColor"/>
+              </svg>
+              <span>Text darf nicht leer sein.</span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="job-analysis">Auswertung</label>
+            <select class="field__control" id="job-analysis" name="analysis">
+              <option value="word_count">Wortanzahl</option>
+              <option value="top_words">Häufigste Wörter</option>
+              <option value="reading_time">Lesezeit</option>
+            </select>
+          </div>
+
+          <div class="job-form__actions">
+            <button class="btn btn--primary" type="submit" id="submit-btn" data-od-id="submit-btn">Auftrag erstellen</button>
+          </div>
+        </form>
+
+        <section class="job-list" id="job-list" aria-label="Aufträge" data-od-id="job-list">
+
+          <article class="job-card" data-od-id="job-card-43">
+            <div class="job-card__header">
+              <div class="job-card__meta">
+                <span class="job-card__id">#43</span>
+                <span class="job-card__type">· top_words</span>
+              </div>
+              <span class="badge badge--pending" data-od-id="badge-43">Wartend</span>
+            </div>
+            <p class="job-card__preview" title="Die Zusammenfassung des Quartalsberichts, die gleich nach ihren häufigsten Begriffen durchsucht wird.">Die Zusammenfassung des Quartalsberichts, die gleich nach ihren häufigsten Begriffen durchsucht wird.</p>
+          </article>
+
+          <article class="job-card" data-od-id="job-card-42">
+            <div class="job-card__header">
+              <div class="job-card__meta">
+                <span class="job-card__id">#42</span>
+                <span class="job-card__type">· word_count</span>
+              </div>
+              <span class="badge badge--done" data-od-id="badge-42">Fertig</span>
+            </div>
+            <p class="job-card__preview" title="drei kleine Wörter">drei kleine Wörter</p>
+            <div class="job-card__result">
+              <div class="result-wordcount">
+                <span class="result-wordcount__num">3</span>
+                <span class="result-wordcount__unit">Wörter</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="job-card" data-od-id="job-card-41">
+            <div class="job-card__header">
+              <div class="job-card__meta">
+                <span class="job-card__id">#41</span>
+                <span class="job-card__type">· reading_time</span>
+              </div>
+              <span class="badge badge--done" data-od-id="badge-41">Fertig</span>
+            </div>
+            <p class="job-card__preview" title="Ein längerer Beispieltext, der genügend Wörter für eine verlässliche Lesezeitschätzung enthält und hier nur als Vorschau angezeigt wird.">Ein längerer Beispieltext, der genügend Wörter für eine verlässliche Lesezeitschätzung enthält und hier nur als Vorschau angezeigt wird.</p>
+            <div class="job-card__result">
+              <div class="result-readingtime">
+                <span class="result-readingtime__value">≈ 2 min 30 s</span>
+                <span class="result-readingtime__basis">basierend auf 500 Wörtern bei 200 Wörtern/min</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="job-card" data-od-id="job-card-40">
+            <div class="job-card__header">
+              <div class="job-card__meta">
+                <span class="job-card__id">#40</span>
+                <span class="job-card__type">· top_words</span>
+              </div>
+              <span class="badge badge--done" data-od-id="badge-40">Fertig</span>
+            </div>
+            <p class="job-card__preview" title="der hund und die katze. der hund bellt, die katze schläft, der hund und die katze sind freunde.">der hund und die katze. der hund bellt, die katze schläft, der hund und die katze sind freunde.</p>
+            <div class="job-card__result">
+              <ol class="result-topwords">
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">1</span>
+                  <span class="result-topwords__word">der</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:100%"></span></span>
+                  <span class="result-topwords__count">3</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">2</span>
+                  <span class="result-topwords__word">die</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:100%"></span></span>
+                  <span class="result-topwords__count">3</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">3</span>
+                  <span class="result-topwords__word">hund</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:100%"></span></span>
+                  <span class="result-topwords__count">3</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">4</span>
+                  <span class="result-topwords__word">katze</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:100%"></span></span>
+                  <span class="result-topwords__count">3</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">5</span>
+                  <span class="result-topwords__word">und</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:66.6%"></span></span>
+                  <span class="result-topwords__count">2</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">6</span>
+                  <span class="result-topwords__word">bellt</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:33.3%"></span></span>
+                  <span class="result-topwords__count">1</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">7</span>
+                  <span class="result-topwords__word">freunde</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:33.3%"></span></span>
+                  <span class="result-topwords__count">1</span>
+                </li>
+                <li class="result-topwords__row">
+                  <span class="result-topwords__rank">8</span>
+                  <span class="result-topwords__word">schläft</span>
+                  <span class="result-topwords__bar"><span class="result-topwords__bar-fill" style="width:33.3%"></span></span>
+                  <span class="result-topwords__count">1</span>
+                </li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="job-card job-card--running" data-od-id="job-card-39">
+            <div class="job-card__header">
+              <div class="job-card__meta">
+                <span class="job-card__id">#39</span>
+                <span class="job-card__type">· word_count</span>
+              </div>
+              <span class="badge badge--running" data-od-id="badge-39"><span class="badge__dot" aria-hidden="true"></span>In Arbeit</span>
+            </div>
+            <p class="job-card__preview" title="Ein Text über die Verarbeitung von Aufträgen in der Warteschlange, der gerade noch ausgewertet wird.">Ein Text über die Verarbeitung von Aufträgen in der Warteschlange, der gerade noch ausgewertet wird.</p>
+          </article>
+
+          <article class="job-card" data-od-id="job-card-38">
+            <div class="job-card__header">
+              <div class="job-card__meta">
+                <span class="job-card__id">#38</span>
+                <span class="job-card__type">· reading_time</span>
+              </div>
+              <span class="badge badge--failed" data-od-id="badge-38">Fehlgeschlagen</span>
+            </div>
+            <p class="job-card__preview" title="Ein Text, dessen Verarbeitung im Worker einen Fehler ausgelöst hat.">Ein Text, dessen Verarbeitung im Worker einen Fehler ausgelöst hat.</p>
+            <div class="job-card__error">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;margin-top:1px;">
+                <path d="M8 1.8 14.2 13H1.8L8 1.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M8 6.2v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="8" cy="11.4" r="0.75" fill="currentColor"/>
+              </svg>
+              <span>Auswertung fehlgeschlagen: Lesezeit konnte nicht berechnet werden.</span>
+            </div>
+          </article>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="mock-nav">
+    <div class="mock-nav__inner">
+      <span class="mock-nav__label">Mockup screens</span>
+      <a class="is-current" href="index.html">Übersicht</a>
+      <a href="empty.html">Leerzustand</a>
+      <a href="api-unreachable.html">API nicht erreichbar</a>
+      <a href="validation.html">Validierung</a>
+      <a href="skeleton.html">Skeleton</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('job-form');
+      var textarea = document.getElementById('job-text');
+      var textField = document.getElementById('text-field');
+      var errorEl = document.getElementById('job-text-error');
+      var submitBtn = document.getElementById('submit-btn');
+      var list = document.getElementById('job-list');
+
+      function clearError() {
+        textField.classList.remove('field--error');
+        errorEl.hidden = true;
+        textarea.removeAttribute('aria-invalid');
+        textarea.removeAttribute('aria-describedby');
+      }
+
+      textarea.addEventListener('input', clearError);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var value = textarea.value.trim();
+        if (!value) {
+          textField.classList.add('field--error');
+          errorEl.hidden = false;
+          textarea.setAttribute('aria-invalid', 'true');
+          textarea.setAttribute('aria-describedby', 'job-text-error');
+          textarea.focus();
+          return;
+        }
+        clearError();
+
+        var analysis = document.getElementById('job-analysis').value;
+        var typeLabel = analysis;
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitBtn.textContent = 'Erstelle …';
+
+        setTimeout(function () {
+          var card = document.createElement('article');
+          card.className = 'job-card';
+          card.innerHTML =
+            '<div class="job-card__header">' +
+              '<div class="job-card__meta">' +
+                '<span class="job-card__id">#44</span>' +
+                '<span class="job-card__type">· ' + typeLabel + '</span>' +
+              '</div>' +
+              '<span class="badge badge--pending">Wartend</span>' +
+            '</div>' +
+            '<p class="job-card__preview" title="' + value.replace(/"/g, '&quot;') + '">' + value + '</p>';
+          list.insertBefore(card, list.firstChild);
+
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+          submitBtn.removeAttribute('aria-busy');
+          submitBtn.textContent = 'Auftrag erstellen';
+          form.reset();
+          textarea.focus();
+        }, 900);
+      });
+    })();
+  </script>
+</body>
+</html>

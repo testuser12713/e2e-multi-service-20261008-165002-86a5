@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Runner — Keine Aufträge</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header" data-od-id="app-header">
+    <div class="app-header__inner">
+      <span class="wordmark" data-od-id="wordmark">Job Runner</span>
+      <div class="poll-indicator" data-od-id="poll-indicator">
+        <span class="poll-indicator__text">
+          <span class="poll-indicator__dot poll-indicator__dot--ok" aria-hidden="true"></span>
+          Live · aktualisiert
+        </span>
+        <span class="poll-indicator__ts">2026-10-08 14:02:31 UTC</span>
+        <button class="refresh-btn" type="button" aria-label="Jetzt aktualisieren" title="Jetzt aktualisieren" data-od-id="refresh-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5V5h-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page" data-od-id="page-main">
+    <div class="container">
+      <div class="page-main">
+
+        <form class="job-form" id="job-form" novalidate data-od-id="job-form">
+          <div class="field" id="text-field">
+            <label class="field__label" for="job-text">Text</label>
+            <textarea class="field__control" id="job-text" name="text" placeholder="Text eingeben, der ausgewertet werden soll …"></textarea>
+            <p class="field__error" id="job-text-error" hidden>
+              <svg class="field__error-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 1.8 14.2 13H1.8L8 1.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M8 6.2v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="8" cy="11.4" r="0.75" fill="currentColor"/>
+              </svg>
+              <span>Text darf nicht leer sein.</span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="job-analysis">Auswertung</label>
+            <select class="field__control" id="job-analysis" name="analysis">
+              <option value="word_count">Wortanzahl</option>
+              <option value="top_words">Häufigste Wörter</option>
+              <option value="reading_time">Lesezeit</option>
+            </select>
+          </div>
+
+          <div class="job-form__actions">
+            <button class="btn btn--primary" type="submit" id="submit-btn" data-od-id="submit-btn">Auftrag erstellen</button>
+          </div>
+        </form>
+
+        <div class="empty-state" data-od-id="empty-state">
+          <svg class="empty-state__glyph" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M7 15h34M12 15l2-6h20l2 6" stroke="#CBD2DC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="9" y="15" width="30" height="25" rx="3" stroke="#CBD2DC" stroke-width="1.5"/>
+            <path d="M16 26h16" stroke="#CBD2DC" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h2 class="empty-state__heading">Noch keine Aufträge</h2>
+          <p class="empty-state__body">Gib oben einen Text ein und wähle einen Auswertungstyp – neue Aufträge erscheinen hier und aktualisieren sich automatisch.</p>
+          <a class="empty-state__link" href="#job-text">Text eingeben</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="mock-nav">
+    <div class="mock-nav__inner">
+      <span class="mock-nav__label">Mockup screens</span>
+      <a href="index.html">Übersicht</a>
+      <a class="is-current" href="empty.html">Leerzustand</a>
+      <a href="api-unreachable.html">API nicht erreichbar</a>
+      <a href="validation.html">Validierung</a>
+      <a href="skeleton.html">Skeleton</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('job-form');
+      var textarea = document.getElementById('job-text');
+      var textField = document.getElementById('text-field');
+      var errorEl = document.getElementById('job-text-error');
+      var submitBtn = document.getElementById('submit-btn');
+
+      function clearError() {
+        textField.classList.remove('field--error');
+        errorEl.hidden = true;
+        textarea.removeAttribute('aria-invalid');
+        textarea.removeAttribute('aria-describedby');
+      }
+
+      textarea.addEventListener('input', clearError);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var value = textarea.value.trim();
+        if (!value) {
+          textField.classList.add('field--error');
+          errorEl.hidden = false;
+          textarea.setAttribute('aria-invalid', 'true');
+          textarea.setAttribute('aria-describedby', 'job-text-error');
+          textarea.focus();
+          return;
+        }
+        clearError();
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        submitBtn.textContent = 'Erstelle …';
+        setTimeout(function () {
+          window.location.href = 'index.html';
+        }, 900);
+      });
+    })();
+  </script>
+</body>
+</html>
