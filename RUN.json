@@ -1,0 +1,66 @@
+{
+  "runcontract": 1,
+  "services": [
+    {
+      "name": "api",
+      "dir": "backend",
+      "stack": "python",
+      "kind": "server",
+      "install": [
+        ["${python}", "-m", "pip", "install", "-q", "-r", "requirements.txt"]
+      ],
+      "start": [
+        "${python}", "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "${PORT}"
+      ],
+      "port": 8000,
+      "port_env": "PORT",
+      "health": {
+        "path": "/api/health",
+        "expect_status": [200]
+      },
+      "env": {
+        "JOBS_DB_PATH": { "dev": "../jobs.db" },
+        "CORS_ALLOWED_ORIGIN": { "dev": "${service:web.origin}" }
+      },
+      "test": [
+        ["${python}", "-m", "pytest", "-q"]
+      ]
+    },
+    {
+      "name": "worker",
+      "dir": "worker",
+      "stack": "python",
+      "kind": "worker",
+      "install": [
+        ["${python}", "-m", "pip", "install", "-q", "-r", "requirements.txt"]
+      ],
+      "start": ["${python}", "main.py"],
+      "env": {
+        "JOBS_DB_PATH": { "dev": "../jobs.db" },
+        "WORKER_POLL_INTERVAL_SECONDS": { "dev": "2" }
+      },
+      "test": [
+        ["${python}", "-m", "pytest", "-q"]
+      ]
+    },
+    {
+      "name": "web",
+      "dir": "frontend",
+      "stack": "web-vite",
+      "kind": "static",
+      "install": [
+        ["npm", "ci"]
+      ],
+      "build": [
+        ["npm", "run", "build"]
+      ],
+      "serve_dir": "dist",
+      "env": {
+        "VITE_API_BASE_URL": { "dev": "${service:api.origin}" }
+      },
+      "test": [
+        ["npm", "test", "--", "--run"]
+      ]
+    }
+  ]
+}
