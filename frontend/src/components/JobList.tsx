@@ -1,8 +1,9 @@
-import { useEffect, useState, type ReactElement } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import { getApiBaseUrl } from '../api/client'
 import { useJobs } from '../state/jobs'
 import type { Job, JobStatus } from '../types'
 import { JobResult } from './JobResult'
+import { SkeletonRow, type SkeletonBar } from './SkeletonRow'
 
 const STATUS_LABELS: Record<JobStatus, string> = {
   pending: 'Wartend',
@@ -159,9 +160,50 @@ function ErrorBanner({
   )
 }
 
+const SKELETON_ROWS: SkeletonBar[][] = [
+  [
+    { width: 40, height: 12 },
+    { width: 90, height: 14 },
+    { width: 70, height: 14 },
+  ],
+  [
+    { width: 34, height: 12 },
+    { width: 84, height: 14 },
+    { width: 62, height: 14 },
+  ],
+  [
+    { width: 38, height: 12 },
+    { width: 88, height: 14 },
+    { width: 74, height: 14 },
+  ],
+]
+
+function SkeletonList(): ReactElement {
+  return (
+    <section
+      className="job-list"
+      aria-label="Aufträge werden geladen"
+      aria-busy="true"
+    >
+      {SKELETON_ROWS.map((bars, index) => (
+        <SkeletonRow bars={bars} key={index} />
+      ))}
+    </section>
+  )
+}
+
 export function JobList(_props: JobListProps): ReactElement {
-  const { jobs, error, refresh } = useJobs()
+  const { jobs, loading, error, refresh } = useJobs()
   const [dismissed, setDismissed] = useState(false)
+  const [hasLoaded, setHasLoaded] = useState(false)
+  const previousLoading = useRef(loading)
+
+  useEffect(() => {
+    if (previousLoading.current && !loading) {
+      setHasLoaded(true)
+    }
+    previousLoading.current = loading
+  }, [loading])
 
   useEffect(() => {
     if (error === null) {
@@ -177,6 +219,7 @@ export function JobList(_props: JobListProps): ReactElement {
   })
 
   const showBanner = error !== null && !dismissed
+  const showSkeleton = loading && ordered.length === 0 && !hasLoaded
 
   return (
     <>
@@ -189,15 +232,17 @@ export function JobList(_props: JobListProps): ReactElement {
         />
       )}
 
-      {ordered.length === 0
-        ? error === null && <EmptyState />
-        : (
-            <section className="job-list" aria-label="Aufträge">
-              {ordered.map((job) => (
-                <JobCard job={job} key={job.id} />
-              ))}
-            </section>
-          )}
+      {showSkeleton ? (
+        <SkeletonList />
+      ) : ordered.length === 0 ? (
+        error === null && <EmptyState />
+      ) : (
+        <section className="job-list" aria-label="Aufträge">
+          {ordered.map((job) => (
+            <JobCard job={job} key={job.id} />
+          ))}
+        </section>
+      )}
     </>
   )
 }
